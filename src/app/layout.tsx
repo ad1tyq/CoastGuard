@@ -5,6 +5,9 @@ import Navbar from "@/components/client/Navbar";
 import Footer from "@/components/client/Footer";
 import AuthProvider from "@/components/client/AuthProvider";
 import { LegendProvider } from "@/contexts/LegendFilterContext";
+import { ReportProvider } from "@/contexts/ReportContext";
+import { PayoutProvider } from "@/contexts/PayoutContext";
+import { NotifProvider } from "@/contexts/NotifContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +34,21 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <PayoutProvider>
         <AuthProvider>
-          <LegendProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </LegendProvider>
+          <NotifProvider>
+          <ReportProvider>
+            <LegendProvider>
+              
+              <Navbar />
+              {children}
+              <Footer />
+              
+            </LegendProvider>
+          </ReportProvider>
+          </NotifProvider>
         </AuthProvider>
+        </PayoutProvider>
       </body>
     </html>
   );

@@ -2,10 +2,9 @@
 
 interface Props {
   triggerPayout: (reason: string, amount: number) => void;
-  pushAudit: (event: string) => void;
 }
 
-export default function Triggers({ triggerPayout, pushAudit }: Props) {
+export default function Triggers({ triggerPayout }: Props) {
   return (
     <div className="bg-blue-100 borde p-4 rounded-xl shadow-lg">
       <h2 className="text-lg font-semibold mb-2">Trigger Conditions (Parametric)</h2>
