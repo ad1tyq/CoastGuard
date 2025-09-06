@@ -25,7 +25,7 @@ export default function Navbar() {
                         {/* Logo Section - Pixel Palettes branding */}
                         <div className="flex items-center">
                             <Link href="/" className="flex items-center space-x-3">
-                                <h1 className="text-3xl font-bold my-6">Ocean Aware</h1>
+                                <h1 className="text-3xl font-bold my-6">CoastGuard+</h1>
                             </Link>
                         </div>
                         {/* Desktop Navigation Menu - Hidden on mobile */}

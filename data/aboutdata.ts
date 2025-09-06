@@ -3,7 +3,7 @@ export const AboutLine = [
         id: 1,
         ind: 1,
         image : "/bg/bg1.jpg",
-        info : "OceanWatch is dedicated to providing real-time ocean hazards, ensuring communities are informed and resilient. Our platform empowers citizens to report hazards and visualize risks effectively.",
+        info : "CoastGuard is dedicated to providing real-time ocean hazards, ensuring communities are informed and resilient. Our platform empowers citizens to report hazards and visualize risks effectively.",
     },
     {
         id: 2,

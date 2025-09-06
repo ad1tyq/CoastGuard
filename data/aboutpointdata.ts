@@ -1,18 +1,19 @@
 const AboutPoints = [
     {
-        image : "/assets/1-square-fill.svg",
-        title : "Gamified Challenges",
-        text : "Learn core concepts like loops, functions, and data structures by solving fun, interactive puzzles and games.",
+        image : "/assets/alert-triangle.svg",
+        title : "Real-Time Hazard Alerts",
+        text : "Get immediate, location-based warnings for cyclones, tsunamis, and floods from official sources, ensuring you have time to act.",
     },
     {
-        image : "/assets/2-square-fill.svg",
-        title : "Compete & Climb",
-        text : "Earn experience points (XP) for every challenge you solve. Climb the leaderboard and compete with friends.",
+        image : "/assets/shield-check.svg",
+        title : "Guided Safety Protocols",
+        text : "Access clear, actionable checklists and find the nearest evacuation routes and relief shelters directly on an interactive map.",
     },
     {
-        image : "/assets/3-square-fill.svg",
-        title : "Diverse Skill Tracks",
-        text : "Start your journey with Python or JavaScript. Master",
+        image : "/assets/wallet-icon.svg",
+        title : "Instant Relief Payouts",
+        text : "Our Relief Wallet uses parametric triggers to automatically send financial aid directly to you during a crisis, ensuring rapid support.",
     }
-]
+];
+
 export default AboutPoints;

@@ -11,7 +11,7 @@ function About({ imageUrl, info, ind }: type) {
         { ind === 1 ? (
             <div className="flex gap-10">
                 <div className="flex flex-col w-[40rem] gap-5">
-                    <h1 className="font-bold text-2xl">OceanWatch Experience</h1>
+                    <h1 className="font-bold text-2xl">CoastGuard+ Experience</h1>
                     <p className="font-light w-[40vw]">{info}</p>
                     {AboutPoints.map((point, index) => {
                         return (

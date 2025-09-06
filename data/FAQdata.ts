@@ -1,9 +1,9 @@
 const faqData = [
   {
     id: 1,
-    question: "What is OceanAware?",
+    question: "What is CoastGuard+?",
     answer:
-      "OceanAware is a citizen-driven platform for real-time ocean hazard reporting and resilience. It connects communities, researchers, and agencies to improve coastal safety."
+      "CoastGuard+ is a citizen-driven platform for real-time ocean hazard reporting and resilience. It connects communities, researchers, and agencies to improve coastal safety."
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const faqData = [
   },
   {
     id: 7,
-    question: "Is OceanAware free to use?",
+    question: "Is CoastGuard+ free to use?",
     answer:
       "Yes, it’s completely free for citizens. The platform is designed to increase awareness, resilience, and collaboration during ocean-related hazards."
   }
