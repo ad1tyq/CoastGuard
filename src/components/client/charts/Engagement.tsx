@@ -18,64 +18,63 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "A horizontal bar chart"
+export const description = "Community engagement bar chart"
 
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { category: "Tsunami", engagement: 120 },
+  { category: "Flood", engagement: 180 },
+  { category: "Cyclone", engagement: 150 },
 ]
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  engagement: {
+    label: "Engagement",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
 export function ChartBarHorizontal() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Bar Chart - Horizontal</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+    <Card className="text-left">
+      <CardHeader className="items-start text-left">
+        <CardTitle>Community Engagement</CardTitle>
+        <CardDescription>
+          Engagement across disaster management areas
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="text-left">
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
             data={chartData}
             layout="vertical"
-            margin={{
-              left: -20,
-            }}
+            barSize={20}
+            margin={{ left: 0, right: 20 }}
+            height={250}
           >
-            <XAxis type="number" dataKey="desktop" hide />
+            <XAxis type="number" dataKey="engagement" hide />
             <YAxis
-              dataKey="month"
+              dataKey="category"
               type="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              width={100}
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={5} />
+            <Bar dataKey="engagement" fill="var(--color-engagement)" radius={5} />
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="flex-col items-start gap-2 text-sm text-left">
         <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Engagement up by 8.4% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Showing citizen involvement across tsunami, flood & cyclone management
         </div>
       </CardFooter>
     </Card>

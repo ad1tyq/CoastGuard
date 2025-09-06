@@ -3,8 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-
-import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
@@ -15,29 +13,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { useLegend } from "@/contexts/LegendFilterContext"
 
+// DataLayersSort.tsx
 const items = [
-  {
-    id: "all",
-    label: "All",
-  },
-  {
-    id: "temperature",
-    label: "Temperature",
-  },
-  {
-    id: "wave height",
-    label: "Wave Height",
-  },
-  {
-    id: "wind speed",
-    label: "Wind Speed",
-  },
-  {
-    id: "current direction",
-    label: "Current Direction",
-  },
+  { id: "all", label: "All" },
+  { id: "cyclone", label: "Cyclone" }, // ✅ match key with disaster.type
+  { id: "flood", label: "Flood" },
+  { id: "tsunami", label: "Tsunami" },
 ] as const
+
 
 const FormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -46,6 +31,8 @@ const FormSchema = z.object({
 })
 
 export function DataLayersSort() {
+  const { Legend, setLegend } = useLegend()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -94,27 +81,16 @@ export function DataLayersSort() {
                             checked={field.value?.includes(item.id)}
                             onCheckedChange={(checked) => {
                               if (item.id === "all") {
-                                // Master toggle
-                                return checked
-                                  ? field.onChange(items.map((i) => i.id)) // select all
-                                  : field.onChange([]) // unselect all
+                                const newValues = checked ? ["all"] : []  // ✅ only "all", nothing else
+                                field.onChange(newValues)
+                                setLegend(newValues)
                               } else {
-                                // Normal toggle
                                 const newValues = checked
-                                  ? [...field.value, item.id]
+                                  ? [...field.value.filter((v) => v !== "all"), item.id]
                                   : field.value.filter((v) => v !== item.id)
 
-                                // If "All" is selected but user unchecks something -> remove "All"
-                                if (
-                                  newValues.includes("all") &&
-                                  !checked
-                                ) {
-                                  field.onChange(
-                                    newValues.filter((v) => v !== "all")
-                                  )
-                                } else {
-                                  field.onChange(newValues)
-                                }
+                                field.onChange(newValues)
+                                setLegend(newValues)
                               }
                             }}
                           />
@@ -131,7 +107,11 @@ export function DataLayersSort() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+
+        {/* 👀 Debug - show live selected state */}
+        <div className="text-sm bg-white rounded-xl text-center p-3 text-gray-700">
+          <b>Selected:</b> {JSON.stringify(Legend)}
+        </div>
       </form>
     </Form>
   )
