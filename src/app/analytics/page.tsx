@@ -11,8 +11,26 @@ import { HazardPredictionChart } from "@/components/client/charts/HazardPredicti
 import RealTimeStatus from "@/components/client/charts/RealTimeStatus"
 import HazardCategoriesChart from "@/components/client/charts/HazardCategories"
 import CoastalMetricsChart from "@/components/client/charts/CoastalMetricsChart"
+import Link from "next/link"
+import { useSession } from "next-auth/react"
 
 export default function Page() {
+    const { data: session } = useSession();
+    if (!session) {
+        return (
+            <div className="relative mt-20 flex size-full min-h-screen flex-col overflow-x-hidden text-[var(--text-primary)]">
+                <div className="flex flex-col items-center">
+                    <div className="shadow-lg bg-gray-200 mt-10 rounded-[10px] w-[auto]
+            text-[clamp(0.9rem,1.1vw,1.1rem)] h-auto py-10 px-8 gap-5 flex flex-col justify-center">
+                        <p><b>Session Logged Out</b></p>
+                    </div>
+                    <Link href="/"
+                        className="rounded cursor-pointer transition-all duration-300 hover:scale-102 hover:bg-gray-400 hover:text-gray-700 px-5 py-[2px] font-semibold text-lg mt-5 text-gray-800 bg-gray-300">home
+                    </Link>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="min-h-screen mt-10 bg-gradient-to-br from-slate-50 to-blue-50 pt-20 pb-10">
@@ -31,7 +49,7 @@ export default function Page() {
             </div>
 
             <div className="max-w-7xl mx-auto px-6 mb-8">
-                <RealTimeStatus/>
+                <RealTimeStatus />
             </div>
 
             <div className="max-w-7xl mx-auto px-6">
@@ -39,15 +57,15 @@ export default function Page() {
 
                     {/* Left Column - Main Metrics */}
                     <div className="lg:col-span-8 space-y-8">
-                        
+
                         {/* Coastal Metrics */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <CoastalMetricsChart/>
+                            <CoastalMetricsChart />
                         </div>
 
                         {/* Hazard Categories */}
                         <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100">
-                            <HazardCategoriesChart/>
+                            <HazardCategoriesChart />
                         </div>
 
                         {/* Charts Grid */}
@@ -68,7 +86,7 @@ export default function Page() {
 
                     {/* Right Column - Secondary Charts & Info */}
                     <div className="lg:col-span-4 space-y-6">
-                        
+
                         {/* Trust Score Distribution */}
                         <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:scale-105 transition-all duration-200">
                             <TrustScoreDistribution />

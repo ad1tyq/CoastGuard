@@ -1,10 +1,9 @@
-
 "use client"
 // Enhanced ReportForm.tsx - Comprehensive Hazard Reporting
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -18,6 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
+import { usePayout } from "@/contexts/PayoutContext"
+import { useReport } from "@/contexts/ReportContext"
+
 const formSchema = z.object({
   hazardType: z.string().min(1, "Please select a hazard type"),
   severity: z.string().min(1, "Please select severity level"),
@@ -28,6 +30,9 @@ const formSchema = z.object({
 export default function ReportForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const {setPayout} = usePayout();
+  const { Report, setReport } = useReport();
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,10 +44,31 @@ export default function ReportForm() {
     },
   })
 
+  function verifyReport(type: string, location: string, description: string): boolean {
+    if (type === "coastal_flooding" && location.includes("coastal") && description.includes("damage")) return true;
+    else if (type === "high_waves" && location.includes("coastal") && description.includes("damage")) return true;
+    else if (type === "infrastructure_damage" && location.includes("coastal") && description.includes("damage")) return true;
+    const val = Math.random() > 0.3;
+    console.log("Math.random() > 0.3 : ", val);
+    return val; // 70% chance it’s real
+  }
+
+  useEffect(() => {
+    if (Report.length > 0) {
+      console.log("from verify, report:", Report)
+      if (verifyReport(
+        Report[Report.length-1].hazardType,
+        Report[Report.length-1].location,
+        Report[Report.length-1].description,
+       ) ) { setPayout(true); }
+    }
+  }, [Report])
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     console.log("Enhanced Hazard Report Submitted ✅", values)
-    
+    setReport(prev => [...prev, values])
+
     setTimeout(() => {
       setIsSubmitting(false)
       setSubmitSuccess(true)
@@ -131,10 +157,10 @@ export default function ReportForm() {
               <FormItem>
                 <FormLabel className="text-gray-700 font-semibold">Location</FormLabel>
                 <FormControl>
-                  <Input 
-                    className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-                    placeholder="Enter specific location, landmark, or coordinates" 
-                    {...field} 
+                  <Input
+                    className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter specific location, landmark, or coordinates"
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -149,10 +175,10 @@ export default function ReportForm() {
               <FormItem>
                 <FormLabel className="text-gray-700 font-semibold">Detailed Description</FormLabel>
                 <FormControl>
-                  <Textarea 
-                    className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px]" 
-                    placeholder="Describe what you observed: water levels, wave height, damage extent, timeline, people affected, etc." 
-                    {...field} 
+                  <Textarea
+                    className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"
+                    placeholder="Describe what you observed: water levels, wave height, damage extent, timeline, people affected, etc."
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -170,8 +196,8 @@ export default function ReportForm() {
             </div>
           </div>
 
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             disabled={isSubmitting}
             className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white py-3 rounded-lg font-semibold text-lg transition-colors"
           >
