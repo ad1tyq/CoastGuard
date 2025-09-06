@@ -29,7 +29,7 @@ export default function Map() {
     const [selectedDisaster, setSelectedDisaster] = useState<Disaster | null>(null);
     const { Legend } = useLegend();
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: 'AIzaSyD0YM7rdaGdfeFKT71OJnNZiRU7cW9j4z0',
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY ?? "",
         libraries: ['visualization'],
     })
 
